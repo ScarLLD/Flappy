@@ -13,10 +13,40 @@ public class Bird : MonoBehaviour
 
     public event Action GameOver;
 
+    private void OnEnable()
+    {
+        _handler.CollisionDetected += ProcessCollision;
+    }
+
     private void Awake()
     {
         _scoreCounter = GetComponent<ScoreCounter>();
         _handler = GetComponent<BirdCollisionHandler>();
         _birdMover = GetComponent<BirdMover>();
     }
+
+    private void OnDisable()
+    {
+        _handler.CollisionDetected -= ProcessCollision;
+    }
+
+    private void ProcessCollision(IInteractable interactable)
+    {
+        if (interactable is Pipe)
+        {
+            GameOver?.Invoke();
+        }
+
+        else if (interactable is ScoreZone)
+        {
+            _scoreCounter.Add();
+        }
+    }
+
+    public void Reset()
+    {
+        _scoreCounter.Reset();
+        _birdMover.Reset();
+    }
+
 }

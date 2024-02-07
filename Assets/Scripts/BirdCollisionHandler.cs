@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
+
+[RequireComponent(typeof(Bird))]
 public class BirdCollisionHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public event Action<IInteractable> CollisionDetected;
+
+    private void OnValidate()
     {
-        
+        GetComponent<Collider2D>().isTrigger = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggetEnter2D(Collider2D other)
     {
-        
+        if (other.TryGetComponent(out IInteractable interactable))
+        {
+            CollisionDetected?.Invoke(interactable);
+        }
     }
 }
