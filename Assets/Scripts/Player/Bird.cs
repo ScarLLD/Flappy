@@ -32,12 +32,12 @@ public class Bird : MonoBehaviour
 
     private void ProcessCollision(IInteractable interactable)
     {
-        if (interactable is Pipe)
+        if (interactable is Bullet)
         {
             GameOver?.Invoke();
         }
 
-        else if (interactable is ScoreZone)
+        else if (interactable is Ground)
         {
             _scoreCounter.Add();
         }

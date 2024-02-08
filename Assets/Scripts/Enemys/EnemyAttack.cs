@@ -17,7 +17,7 @@ public class EnemyAttack : MonoBehaviour
 
         while (isShooting)
         {
-            Instantiate(_bullet);
+            Instantiate(_bullet, transform);
             yield return _timeBetwenShot;
         }
     }

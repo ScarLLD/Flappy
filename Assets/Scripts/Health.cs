@@ -11,14 +11,6 @@ public class Health : MonoBehaviour
     public float CurrentHealth => _currentHealth;
     public float MaxHealth => _maxHealth;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.TryGetComponent(out Bullet bullet))
-        {
-            TakeDamage(bullet.Damage);
-        }
-    }
-
     public void TakeDamage(float damage)
     {
         _currentHealth -= damage;
