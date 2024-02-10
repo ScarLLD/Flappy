@@ -19,11 +19,12 @@ public class ObjectPool : MonoBehaviour
     {
         if (_pool.Count == 0)
         {
-            var gameObject = Instantiate(_gameObjectPrefab);
+            var gameObject = Instantiate(_gameObjectPrefab, transform.position, transform.rotation);
             gameObject.transform.parent = _container;
 
             return gameObject;
         }
+
 
         return _pool.Dequeue();
     }

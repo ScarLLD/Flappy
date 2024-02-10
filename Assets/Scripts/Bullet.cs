@@ -1,31 +1,36 @@
-using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private int _timeToDestroy;
 
-    private WaitForSeconds _waitForSeconds;
-
+    private Rigidbody2D _rigidBody2D;
     private void Awake()
     {
-        _waitForSeconds = new WaitForSeconds(_timeToDestroy);
+        _rigidBody2D = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        StartCoroutine(Liquidate());
+        _rigidBody2D.velocity = transform.right * _speed;
+        Invoke(nameof(Disable), _timeToDestroy);
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        transform.Translate(Vector2.left * _speed * Time.deltaTime, Space.World);
+        _rigidBody2D.velocity = Vector2.zero;
     }
 
-    private IEnumerator Liquidate()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        yield return _waitForSeconds;
-        Destroy(gameObject);
+        if (collision.gameObject.GetComponent<Bird>() == false)
+            gameObject.SetActive(false);
+    }
+
+    private void Disable()
+    {
+        gameObject.SetActive(false);
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BirdAttack : MonoBehaviour
@@ -14,7 +12,6 @@ public class BirdAttack : MonoBehaviour
             var bullet = _bulletPool.GetObject();
 
             bullet.gameObject.SetActive(true);
-            bullet.transform.position = transform.position;
         }
     }
 }
